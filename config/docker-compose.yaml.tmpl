@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  twitchandtear:
+    image: frozenfoxx/twitchandtear:latest
+    container_name: "twitchandtear"
+    restart: always
+    environment:
+      - STREAM_KEY=${STREAM_KEY}
+      - TARGET_HOST=${TARGET_HOST}
+    volumes:
+      - /data/wads:/wads:ro
