@@ -23,5 +23,16 @@ module "twitchandtear" {
   stream_key               = var.stream_key
   target_host              = var.target_host
   type                     = var.type
+  wads_upload_dir          = var.wads_upload_dir
 }
 ```
+
+# Server Control
+
+Scripts and files on disk are provided for ease of control of the TwitchandTear server.
+
+* **Control script**: `/usr/local/bin/twitchandtear_server.sh`.
+* **Data files**: `/data/wads`.
+* **Procedures**
+  * **Fresh installation**: `CONFIG=[base64 server INI] OPTIONS=[string of options] /usr/local/bin/twitchandtear_server.sh install`
+  * **Adjust options**: `[edit either or both files] ; /usr/local/bin/twitchandtear_server.sh restart`
