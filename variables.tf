@@ -3,8 +3,23 @@ variable "authorized_keys" {
   description = "List of public keys used for SSH connections"
 }
 
+variable "channels" {
+  default     = ""
+  description = "Twitch channels to connect to"
+}
+
+variable "client_id" {
+  default     = ""
+  description = "a Twitch application Client ID"
+}
+
+variable "client_secret" {
+  default     = ""
+  description = "a Twitch application Client Secret"
+}
+
 variable "image" {
-  default     = "linode/ubuntu20.04"
+  default     = "linode/ubuntu22.04"
   description = "Image used for deployment"
 }
 
@@ -49,7 +64,7 @@ variable "target_host" {
 }
 
 variable "type" {
-  default     = "g6-nanode-2"
+  default     = "g6-dedicated-2"
   description = "Type of instance"
 }
 

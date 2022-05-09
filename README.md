@@ -20,6 +20,9 @@ module "twitchandtear" {
   name                     = "twitchandtear"
   private_key              = chomp(file(var.private_ssh_key))
   region                   = var.region
+  channels                 = var.channels
+  client_id                = var.client_id
+  client_secret            = var.client_secret
   stream_key               = var.stream_key
   target_host              = var.target_host
   type                     = var.type
@@ -31,8 +34,6 @@ module "twitchandtear" {
 
 Scripts and files on disk are provided for ease of control of the TwitchandTear server.
 
-* **Control script**: `/usr/local/bin/twitchandtear_server.sh`.
-* **Data files**: `/data/wads`.
-* **Procedures**
-  * **Fresh installation**: `CONFIG=[base64 server INI] OPTIONS=[string of options] /usr/local/bin/twitchandtear_server.sh install`
-  * **Adjust options**: `[edit either or both files] ; /usr/local/bin/twitchandtear_server.sh restart`
+* **Control script**: `/usr/local/bin/twitchandtear_server.sh`
+* **Configuration file**: `/data/config`
+* **Data files**: `/data/wads`

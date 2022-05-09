@@ -21,11 +21,6 @@ resource "linode_instance" "main" {
   }
 
   provisioner "file" {
-    source      = "${path.module}/config"
-    destination = "/tmp"
-  }
-
-  provisioner "file" {
     source      = "${path.module}/scripts"
     destination = "/tmp"
   }
@@ -39,11 +34,10 @@ resource "linode_instance" "main" {
     inline = [
       "chmod 755 /tmp/scripts/*",
       "mv /tmp/scripts/* /usr/local/bin/",
-      "/usr/local/bin/install_docker.sh",
+      "/usr/local/bin/install_podman.sh",
       "/usr/local/bin/install_fail2ban.sh",
-      "mv /tmp/config/* /data/",
       "mv /tmp/wads /data/wads",
-      "STREAM_KEY=\"${var.stream_key}\" TARGET_HOST=\"${var.target_host}\" /usr/local/bin/deploy.sh"
+      "CHANNELS=\"${var.channels}\" CLIENT_ID=\"${var.client_id}\" CLIENT_SECRET=\"${var.client_secret}\" STREAM_KEY=\"${var.stream_key}\" TARGET_HOST=\"${var.target_host}\" /usr/local/bin/deploy.sh"
     ]
   }
 }

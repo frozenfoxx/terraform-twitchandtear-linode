@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
 # Variables
+CONFIG_PATH=${CONFIG_PATH:-'/data/config'}
 DATA_DIR=${DATA_DIR:-'/data'}
-IMAGE=${IMAGE:-'frozenfoxx/twitchandtear:latest'}
+IMAGE=${IMAGE:-'docker.io/frozenfoxx/twitchandtear:latest'}
 RESTART=${RESTART:-'always'}
-STREAM_KEY=${STREAM_KEY:-''}
-TARGET_HOST=${TARGET_HOST:-''}
 
 # Functions
 
@@ -13,19 +12,26 @@ TARGET_HOST=${TARGET_HOST:-''}
 install_container()
 {
   echo "Setting up container..."
-  docker pull ${IMAGE}
+  podman pull ${IMAGE}
 }
 
 ## Run the container
 run_container()
 {
   echo "Running the container..."
-  docker run -it \
+
+  source ${CONFIG_PATH}
+
+  podman run -it \
     -d \
     --restart=${RESTART} \
     -v ${DATA_DIR}/wads:/wads:ro \
-    -e STREAM_KEY=${STREAM_KEY} \
-    -e TARGET_HOST=${TARGET_HOST} \
+    -e CHANNELS \
+    -e CLIENT_ID \
+    -e CLIENT_SECRET \
+    -e OAUTH_TOKEN \
+    -e STREAM_KEY \
+    -e TARGET_HOST \
     --name='twitchandtear' \
     ${IMAGE}
 }
@@ -34,8 +40,8 @@ run_container()
 stop_container()
 {
   echo "Stopping the container..."
-  docker kill twitchandtear
-  echo y | docker container prune
+  podman kill twitchandtear
+  echo y | podman container prune
 }
 
 ## Display usage information
@@ -50,10 +56,8 @@ usage()
   echo "    start                  start the server"
   echo "    stop                   stop the server"
   echo "  Environment Variables:"
-  echo "    IMAGE                  the image to pull (default: 'frozenfoxx/twitchandtear:latest')"
+  echo "    IMAGE                  the image to pull (default: 'docker.io/frozenfoxx/twitchandtear:latest')"
   echo "    RESTART                the restart policy for the container (default: 'always')"
-  echo "    STREAM_KEY             Twitch stream key (default: '')"
-  echo "    TARGET_HOST            target Zandronum server (default: '')"
 }
 
 # Logic
